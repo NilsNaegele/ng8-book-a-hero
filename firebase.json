@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/ng8-book-a-hero",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
