@@ -6,6 +6,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 
 import { Observable } from 'rxjs';
+import { GlobalService } from './services/global.service';
+import { LocalCartService } from './services/local-cart.service';
 
 @Component({
   selector: 'app-root',
@@ -18,13 +20,48 @@ export class AppComponent {
   theme: Observable<any>;
   user: Observable<firebase.User>;
 
-  constructor(public afAuth: AngularFireAuth) {}
+  constructor(public router: Router,
+              public route: ActivatedRoute,
+              public db: AngularFireDatabase,
+              public afAuth: AngularFireAuth,
+              public globalService: GlobalService,
+              public localCart: LocalCartService) {
+                this.nav = db.list('/menus/nav').valueChanges();
+                this.theme = db.object('/theme').valueChanges();
 
-  login() {
+                this.user = afAuth.authState;
+                this.user.subscribe(currentUser => {
+                  globalService.user.next(currentUser);
+
+                  if (currentUser) {
+                    this.db.object('/users/' + currentUser.uid).update({
+                      uid: currentUser.uid,
+                      email: currentUser.email,
+                      photoURL: currentUser.photoURL,
+                      status: 'active'
+                    });
+
+                    this.db.object('/users/' + currentUser.uid).valueChanges().subscribe((user:any) => {
+                      if (user.cart) {
+                        globalService.cart.next(user.cart);
+                      }
+                    });
+                  }
+
+                  if (!currentUser && this.localCart.cartHasItems()) {
+                    this.globalService.cart.next(this.localCart.cartGetItems());
+                  }
+                });
+              }
+
+  login(): void {
     this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }
 
-  logout() {
+  logout(): void {
+    this.globalService.cart.next(null);
+    this.globalService.order.next(null);
+    this.localCart.clearAll();
     this.afAuth.auth.signOut();
   }
 }

@@ -12,7 +12,7 @@
         <li *ngIf="(user | async)?.displayName" class="user-nav">
             <img src="{{ (user | async)?.photoURL }}" class="user-photo" [matMenuTriggerFor]="userMenu">
             <mat-menu #userMenu="matMenu">
-                <button mat-menu-item routerLink="/account/orders">My Account</button>
+                <button mat-menu-item routerLink="/">My Account</button>
                 <button mat-menu-item (click)="logout()">Logout</button>
             </mat-menu>
         </li>
