@@ -28,11 +28,12 @@ firebase.initializeApp(environment.firebase);
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    MaterialModule,
+    MaterialModule,
     AngularFireModule.initializeApp(environment.firebase, 'ng8-book-a-hero'),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AppRoutingModule,
-    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
