@@ -1,6 +1,7 @@
 import { AdminApproveDialogComponent } from './components/admin-approve-dialog/admin-approve-dialog.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { AdminComponent } from './components/admin/admin.component';
 import { AddOrderComponent } from './components/add-order/add-order.component';
 import { AddPageComponent } from './components/add-page/add-page.component';
@@ -20,6 +21,9 @@ import { AdminClientsComponent } from './components/admin-clients/admin-clients.
 import { AdminHeroesCategoriesComponent } from './components/admin-heroes-categories/admin-heroes-categories.component';
 import { AdminHeroesComponent } from './components/admin-heroes/admin-heroes.component';
 import { OrderComponent } from './herofront/components/order/order.component';
+import { AuthGuard } from '../services/auth-guard.service';
+import { AdminGuard } from '../services/admin-guard.service';
+import { SuperAdminGuard } from '../services/super-admin-guard.service';
 
 
 const adminRoutes: Routes = [

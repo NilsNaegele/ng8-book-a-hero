@@ -9,6 +9,7 @@ import { SortPipe } from './pipes/sort.pipe';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { SearchPipe } from './pipes/search.pipe';
 import { RouterModule } from '@angular/router';
+import { OrderComponent } from '../admin/herofront/components/order/order.component';
 
 const pipes = [
   GetKeyPipe,
@@ -21,7 +22,7 @@ const pipes = [
 ];
 
 @NgModule({
-  declarations: [...pipes],
+  declarations: [...pipes, OrderComponent],
   imports: [
     CommonModule,
     RouterModule,
