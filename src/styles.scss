@@ -115,6 +115,10 @@ a {
     padding-top: 64px;
 }
 
+.mat-drawer-container {
+    z-index: 0 !important;
+}
+
 admin .mat-sidenav-content {
     padding-top: 0;
 }

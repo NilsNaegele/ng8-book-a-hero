@@ -15,6 +15,7 @@ import { MaterialModule } from './material.module';
 import { AppComponent } from './app.component';
 import { HeroesComponent } from './herofront/components/heroes/heroes.component';
 import { HeroesCategoriesComponent } from './herofront/components/heroes-categories/heroes-categories.component';
+import { HeroesCategoryComponent } from './herofront/components/heroes-category/heroes-category.component';
 
 firebase.initializeApp(environment.firebase);
 
@@ -22,7 +23,8 @@ firebase.initializeApp(environment.firebase);
   declarations: [
     AppComponent,
     HeroesComponent,
-    HeroesCategoriesComponent
+    HeroesCategoriesComponent,
+    HeroesCategoryComponent
   ],
   imports: [
     BrowserModule,

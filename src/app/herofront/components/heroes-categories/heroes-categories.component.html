@@ -1,1 +1,6 @@
-<p>heroes-categories works!</p>
+<section *ngFor="let category of categories | async">
+    <app-heroes-category [categoryInput]="category" *ngIf="category.products" class="categories"></app-heroes-category>
+  </section>
+  <div *ngIf="categories | async">
+    <button mat-button routerLink="/">View All Heroes</button>
+  </div>

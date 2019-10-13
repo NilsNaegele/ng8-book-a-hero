@@ -41,7 +41,7 @@ export class AppComponent {
                       status: 'active'
                     });
 
-                    this.db.object('/users/' + currentUser.uid).valueChanges().subscribe((user:any) => {
+                    this.db.object('/users/' + currentUser.uid).valueChanges().subscribe((user: any) => {
                       if (user.cart) {
                         globalService.cart.next(user.cart);
                       }
