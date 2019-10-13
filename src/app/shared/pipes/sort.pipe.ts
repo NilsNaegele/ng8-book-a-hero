@@ -26,7 +26,7 @@ export class SortPipe implements PipeTransform {
         const desc = propertyToCheck.substr(0, 1) === '-';
 
 
-        if ( !propertyToCheck || propertyToCheck === '-' || propertyToCheck === '+') {
+        if (!propertyToCheck || propertyToCheck === '-' || propertyToCheck === '+') {
             return !desc ? input.sort() : input.sort().reverse();
         } else {
             const property = propertyToCheck.substr(0, 1) === '+' || propertyToCheck.substr(0, 1) === '-'

@@ -6,11 +6,12 @@ import { ObjectCounterPipe } from './pipes/object-counter.pipe';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { SortPipe } from './pipes/sort.pipe';
 import { TruncatePipe } from './pipes/truncate.pipe';
+import { SearchPipe } from './pipes/search.pipe';
 
 
 
 @NgModule({
-  declarations: [GetKeyPipe, GetUserPipe, ObjectCounterPipe, SafeHtmlPipe, SortPipe, TruncatePipe],
+  declarations: [GetKeyPipe, GetUserPipe, ObjectCounterPipe, SafeHtmlPipe, SortPipe, TruncatePipe, SearchPipe],
   imports: [
     CommonModule
   ]
