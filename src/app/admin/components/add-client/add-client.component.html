@@ -1,1 +1,17 @@
-<p>add-client works!</p>
+<div class="client-form">
+        <h2>
+            <span *ngIf="!editMode">Add a</span>
+            <span *ngIf="editMode">Edit</span>
+            Client
+        </h2>
+    
+        <mat-form-field class="block">
+            <input matInput placeholder="Client email" type="text" [(ngModel)]="newEmail">
+        </mat-form-field>
+    
+        <button mat-raised-button (click)="addClient(newEmail)" class="block">
+            <span *ngIf="!editMode">Add</span>
+            <span *ngIf="editMode">Save</span>
+            Client
+        </button>
+    </div>
