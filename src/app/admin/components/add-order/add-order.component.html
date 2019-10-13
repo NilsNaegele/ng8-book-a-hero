@@ -1,1 +1,81 @@
-<p>add-order works!</p>
+<div class="order-form">
+        <h2>
+            <span *ngIf="!editMode">Add an</span>
+            <span *ngIf="editMode">Edit</span>
+            Order <span *ngIf="editMode">#{{orderKey}}</span>
+        </h2>
+    
+        <div class="order-user" *ngIf="editMode">
+          Order placed by:
+          <span *ngIf="editMode && order.uid">{{ (users | async | getUser: order.uid)?.email }}</span>
+          <span *ngIf="editMode && !order.uid">Guest User</span>
+        </div>
+    
+        <div>
+            <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="order.date" (focus)="picker.open()">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+    
+        <mat-select placeholder="Order Status" [(ngModel)]="order.status">
+          <mat-option *ngFor="let status of statuses" [value]="status.id">{{ status.id }}</mat-option>
+        </mat-select>
+    
+        <mat-card>
+          <h3>Shipping info</h3>
+          <mat-form-field class="block">
+              <input matInput placeholder="Name (first & last)" [(ngModel)]="order.shipping.name">
+          </mat-form-field>
+            <mat-form-field class="block">
+              <input matInput placeholder="Company" [(ngModel)]="order.shipping.company">
+          </mat-form-field>
+          <mat-form-field class="block">
+              <input matInput placeholder="Email" type="email" [(ngModel)]="order.shipping.email">
+          </mat-form-field>
+          <mat-form-field class="block">
+              <input matInput placeholder="Address" [(ngModel)]="order.shipping.address">
+          </mat-form-field>
+          <mat-form-field class="block">
+              <input matInput placeholder="City" [(ngModel)]="order.shipping.city">
+          </mat-form-field>
+          <mat-select placeholder="Country" [(ngModel)]="order.shipping.state">
+            <mat-option *ngFor="let country of countries" [value]="country.abbreviation">{{ state.name }}</mat-option>
+          </mat-select>
+          <mat-form-field>
+            <input matInput placeholder="Zip Code" [(ngModel)]="order.shipping.zip">
+          </mat-form-field>
+        </mat-card>
+    
+        <mat-card>
+          <h3>Billing info</h3>
+          <mat-form-field class="block">
+              <input matInput placeholder="Name (first & last)" [(ngModel)]="order.billing.name">
+          </mat-form-field>
+            <mat-form-field class="block">
+              <input matInput placeholder="Company" [(ngModel)]="order.billing.company">
+          </mat-form-field>
+          <mat-form-field class="block">
+              <input matInput placeholder="Email" type="email" [(ngModel)]="order.billing.email">
+          </mat-form-field>
+          <mat-form-field class="block">
+              <input matInput placeholder="Address" [(ngModel)]="order.billing.address">
+          </mat-form-field>
+          <mat-form-field class="block">
+              <input matInput placeholder="City" [(ngModel)]="order.billing.city">
+          </mat-form-field>
+          <mat-select placeholder="State" [(ngModel)]="order.billing.state">
+            <mat-option *ngFor="let state of states" [value]="state.abbreviation">{{ state.name }}</mat-option>
+          </mat-select>
+          <mat-form-field>
+            <input matInput placeholder="Zip Code" [(ngModel)]="order.billing.zip">
+          </mat-form-field>
+        </mat-card>
+    
+        <button mat-raised-button (click)="addOrder(order)" class="block submit">
+            <span *ngIf="!editMode">Add</span>
+            <span *ngIf="editMode">Save</span>
+            Order
+        </button>
+    </div>
