@@ -1,1 +1,75 @@
-<p>add-page works!</p>
+<div class="page-form">
+        <h2>
+            <span *ngIf="!editMode">Add a</span>
+            <span *ngIf="editMode">Edit</span>
+            Page
+        </h2>
+    
+        <mat-toolbar class="highlight small" *ngIf="awaitingApproval" routerLink="/admin/approvals">
+            This product has a change awaiting moderation
+            <div class="action">
+                View Approvals
+            </div>
+        </mat-toolbar>
+    
+        <mat-form-field class="block">
+            <input matInput placeholder="Page URL (no slashes, spaces or special characters)" type="text" [(ngModel)]="newURL">
+        </mat-form-field>
+    
+        <mat-form-field class="block">
+            <input matInput placeholder="Title" [(ngModel)]="newTitle">
+        </mat-form-field>
+    
+        <ckeditor
+            [(ngModel)]="newBody"
+            [config]="{uiColor: '#FFFFFF', extraPlugins: 'divarea'}"
+            [readonly]="false">
+        </ckeditor>
+    
+        <mat-slide-toggle ngDefaultControl [(ngModel)]="newPublished">
+            <span *ngIf="!newPublished">Publish</span>
+            <span *ngIf="newPublished">Un-Publish</span>
+        </mat-slide-toggle>
+    
+        <button
+            mat-raised-button
+            (click)="approveItem(newURL, newTitle, newBody, newPublished)"
+            class="submit"
+            *ngIf="router.url.includes('approval') && (currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin')">
+            <span>Approve</span>
+        </button>
+    
+        <button
+            mat-raised-button
+            (click)="submitForModeration(newURL, newTitle, newBody, newPublished)"
+            class="submit"
+            *ngIf="router.url.includes('approval') && entityObject && ((currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin') || currentAdmin.uid === entityObject.updatedBy)">
+            Save Draft
+        </button>
+    
+        <button
+            mat-raised-button
+            (click)="deleteItem($event)"
+            class="submit"
+            *ngIf="router.url.includes('approval') && entityObject && ((currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin') || currentAdmin.uid === entityObject.updatedBy)">
+            Delete Draft
+        </button>
+    
+        <button
+            mat-raised-button
+            (click)="submitForModeration(newURL, newTitle, newBody, newPublished)"
+            class="submit"
+            *ngIf="!router.url.includes('approval')">
+            <span>Submit for Moderation</span>
+        </button>
+    
+        <button
+            mat-raised-button
+            (click)="addPage(newURL, newTitle, newBody, newPublished)"
+            class="submit"
+            *ngIf="!router.url.includes('approval') && (currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin')">
+            <span *ngIf="!editMode">Add</span>
+            <span *ngIf="editMode">Save</span>
+            Page
+        </button>
+    </div>
