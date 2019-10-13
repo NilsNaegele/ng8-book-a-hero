@@ -27,6 +27,8 @@ import { AdminThemeComponent } from './components/admin-theme/admin-theme.compon
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminApproveDialogComponent } from './components/admin-approve-dialog/admin-approve-dialog.component';
 import { AdminDeleteDialogComponent } from './components/admin-delete-dialog/admin-delete-dialog.component';
+import { SharedModule } from '../shared/shared.module';
+import { OrderComponent } from './herofront/components/order/order.component';
 
 
 
@@ -51,12 +53,14 @@ import { AdminDeleteDialogComponent } from './components/admin-delete-dialog/adm
             AdminThemeComponent,
             AdminComponent,
             AdminApproveDialogComponent,
-            AdminDeleteDialogComponent],
+            AdminDeleteDialogComponent,
+            OrderComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
     FormsModule,
     MaterialModule,
+    SharedModule,
     CKEditorModule,
     DndModule.forRoot(),
   ]

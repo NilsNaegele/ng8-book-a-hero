@@ -6,7 +6,11 @@ import { HeroesComponent } from './herofront/components/heroes/heroes.component'
 
 const routes: Routes = [
   { path: '', component: HeroesCategoriesComponent },
-  { path: 'heroes', component: HeroesComponent }
+  { path: 'heroes', component: HeroesComponent },
+  {
+  path: 'admin',
+  loadChildren: () => import('./admin/admin.module').then(mod => mod.AdminModule)
+  }
 ];
 
 @NgModule({

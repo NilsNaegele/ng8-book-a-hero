@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 import { HeroesComponent } from './herofront/components/heroes/heroes.component';
 import { HeroesCategoriesComponent } from './herofront/components/heroes-categories/heroes-categories.component';
 import { HeroesCategoryComponent } from './herofront/components/heroes-category/heroes-category.component';
+import { SharedModule } from './shared/shared.module';
 
 firebase.initializeApp(environment.firebase);
 
@@ -31,7 +32,7 @@ firebase.initializeApp(environment.firebase);
     BrowserAnimationsModule,
     FormsModule,
     MaterialModule,
-    MaterialModule,
+    SharedModule,
     AngularFireModule.initializeApp(environment.firebase, 'ng8-book-a-hero'),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
