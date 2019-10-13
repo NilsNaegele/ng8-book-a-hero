@@ -7,7 +7,7 @@
     
         <div class="order-user" *ngIf="editMode">
           Order placed by:
-          <span *ngIf="editMode && order.uid">{{ (users | async | getUser: order.uid)?.email }}</span>
+          <span *ngIf="editMode && order.uid">{{ (users | getUser: order.uid)?.email }}</span>
           <span *ngIf="editMode && !order.uid">Guest User</span>
         </div>
     
@@ -40,8 +40,8 @@
           <mat-form-field class="block">
               <input matInput placeholder="City" [(ngModel)]="order.shipping.city">
           </mat-form-field>
-          <mat-select placeholder="Country" [(ngModel)]="order.shipping.state">
-            <mat-option *ngFor="let country of countries" [value]="country.abbreviation">{{ state.name }}</mat-option>
+          <mat-select placeholder="Country" [(ngModel)]="order.shipping.country">
+            <mat-option *ngFor="let country of countries" [value]="country.abbreviation">{{ country.name }}</mat-option>
           </mat-select>
           <mat-form-field>
             <input matInput placeholder="Zip Code" [(ngModel)]="order.shipping.zip">
@@ -66,7 +66,7 @@
               <input matInput placeholder="City" [(ngModel)]="order.billing.city">
           </mat-form-field>
           <mat-select placeholder="State" [(ngModel)]="order.billing.state">
-            <mat-option *ngFor="let state of states" [value]="state.abbreviation">{{ state.name }}</mat-option>
+            <mat-option *ngFor="let country of countries" [value]="country.abbreviation">{{ country.name }}</mat-option>
           </mat-select>
           <mat-form-field>
             <input matInput placeholder="Zip Code" [(ngModel)]="order.billing.zip">

@@ -174,7 +174,7 @@ export class AddPageComponent implements OnInit {
     this.validateFields(newURL, newTitle, newBody);
   }
 
-  approveItem(newURL: string, newTitle: string, newBody: true, newPublished: boolean) {
+  approveItem(newURL: string, newTitle: string, newBody: string, newPublished: boolean) {
     if (this.entityObject.entityKey) {
       const ogEntity = this.db.object('/pages/' + this.entityObject.entityKey);
       ogEntity.set(this.entityObject);

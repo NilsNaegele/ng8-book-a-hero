@@ -1,1 +1,95 @@
-<p>add-post works!</p>
+<div class="post-form">
+        <h2>
+            <span *ngIf="!editMode">Add a</span>
+            <span *ngIf="editMode">Edit</span>
+            Post
+        </h2>
+    
+        <mat-toolbar class="highlight small" *ngIf="awaitingApproval" routerLink="/admin/approvals">
+            This post has a change awaiting moderation
+            <div class="action">
+                View Approvals
+            </div>
+        </mat-toolbar>
+    
+        <mat-form-field class="block">
+            <input mdInput placeholder="Post URL (no slashes, spaces or special characters)" type="text" [(ngModel)]="newURL">
+        </mat-form-field>
+    
+        <div>
+            <mat-form-field>
+            <input mdInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="newDate" (focus)="picker.open()">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+    
+        <mat-form-field class="block">
+            <input mdInput placeholder="Title" [(ngModel)]="newTitle">
+        </mat-form-field>
+    
+        <div class="upload-button">
+            <button mat-raised-button class="mat-upload-button">
+                <span *ngIf="!imageUrl">Upload</span>
+                <span *ngIf="imageUrl">Change</span>
+                Featured Image
+            </button>
+            <input type="file" id="uploadImage" name="thumbnail" class="native-upload" (change)="handleFiles($event)" accept="image/*">
+        </div>
+        <img [src]="imageUrl" *ngIf="imageUrl" class="thumbnail">
+        <div class="no-image" *ngIf="!imageUrl">No image chosen</div>
+        <div (click)="deleteImage()" *ngIf="imageUrl" class="delete-image">Delete Image</div>
+    
+        <ckeditor
+            [(ngModel)]="newBody"
+            [config]="{uiColor: '#FFFFFF', extraPlugins: 'divarea'}"
+            [readonly]="false">
+        </ckeditor>
+    
+        <mat-slide-toggle ngDefaultControl [(ngModel)]="newPublished">
+            <span *ngIf="!newPublished">Publish</span>
+            <span *ngIf="newPublished">Un-Publish</span>
+        </mat-slide-toggle>
+    
+        <button
+            mat-raised-button
+            (click)="approveItem(newURL, newDate, newTitle, newBody, newPublished)"
+            class="submit"
+            *ngIf="router.url.includes('approval') && (currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin')">
+            <span>Approve</span>
+        </button>
+    
+        <button
+            mat-raised-button
+            (click)="submitForModeration(newURL, newDate, newTitle, newBody, newPublished)"
+            class="submit"
+            *ngIf="router.url.includes('approval') && entityObject && ((currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin') || currentAdmin.uid === entityObject.updatedBy)">
+            Save Draft
+        </button>
+    
+        <button
+            mat-raised-button
+            (click)="deleteItem($event)"
+            class="submit"
+            *ngIf="router.url.includes('approval') && entityObject && ((currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin') || currentAdmin.uid === entityObject.updatedBy)">
+            Delete Draft
+        </button>
+    
+        <button
+            mat-raised-button
+            (click)="submitForModeration(newURL, newDate, newTitle, newBody, newPublished)"
+            class="submit"
+            *ngIf="!router.url.includes('approval')">
+            <span>Submit for Moderation</span>
+        </button>
+    
+        <button
+            mat-raised-button
+            (click)="addPost(newURL, newDate, newTitle, newBody, newPublished)"
+            class="submit"
+            *ngIf="!router.url.includes('approval') && (currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin')">
+            <span *ngIf="!editMode">Add</span>
+            <span *ngIf="editMode">Save</span>
+            Post
+        </button>
+    </div>

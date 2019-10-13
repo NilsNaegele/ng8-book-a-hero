@@ -1,0 +1,71 @@
+@import '../../../../variables.scss';
+
+.post-form {
+    box-sizing: border-box;
+    padding: 0 30px 30px 30px;
+}
+
+.highlight.small {
+    cursor: pointer;
+    margin-bottom: 30px;
+    opacity: .7;
+
+    .action {
+        color: $color-white;
+        font-weight: 800;
+        margin-left: auto;
+    }
+}
+
+.submit {
+    margin-top: 30px;
+}
+
+.mat-form-field {
+    display: block;
+}
+
+.mat-slide-toggle,
+ckeditor {
+    display: block;
+    margin-top: 30px;
+}
+
+.thumbnail {
+    display: block;
+    margin-top: 10px;
+    width: 100px;
+}
+
+.mat-upload-button {
+    margin-top: 10px;
+    pointer-events: none;
+    position: relative;
+    z-index: 1;
+}
+
+.upload-button {
+    position: relative;
+}
+
+.native-upload {
+    cursor: pointer;
+    height: 38px;
+    left: 0;
+    outline: 0;
+    position: absolute;
+    top: 10px;
+    width: 208px;
+}
+
+.no-image {
+    font-size: 0.8em;
+    margin: 5px 0 0 38px;
+}
+
+.delete-image {
+    color: #ff0000;
+    cursor: pointer;
+    font-size: 0.8em;
+    margin: 5px 0 0 0;
+}
