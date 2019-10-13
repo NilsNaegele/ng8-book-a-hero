@@ -1,9 +1,36 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { GlobalService } from './global.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SuperAdminGuardService {
+export class SuperAdminGuard {
 
-  constructor() { }
+  currentUser: any;
+
+  constructor(
+    public router: Router,
+    public db: AngularFireDatabase,
+    public globalService: GlobalService
+  ) {
+    this.currentUser = globalService.user.getValue();
+  }
+
+  canActivate(): Promise<boolean> {
+    return new Promise(Resolve => {
+      if (this.currentUser) {
+        this.db.list('/admins', ref => ref.orderByChild('email').equalTo(this.currentUser.email)).valueChanges()
+          .subscribe((u: any) => {
+            if (u[0].role === 'super-admin') {
+              return Resolve(true);
+            } else {
+              this.router.navigate(['/admin']);
+              return Resolve(false);
+            }
+        });
+      }
+    });
+  }
 }
