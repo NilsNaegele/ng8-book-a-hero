@@ -1,0 +1,164 @@
+<div class="container">
+        <div class="button-container">
+            <h2>Approvals</h2>
+        </div>
+        <p *ngIf="(heroApprovals | async)?.length === 0 && (pageApprovals | async)?.length === 0 && (postApprovals | async)?.length === 0 && (categoryApprovals | async)?.length === 0"
+          class="center">
+          Nothing to approve at this time
+        </p>
+        <mat-toolbar class="highlight" *ngIf="(heroApprovals | async)?.length > 0">
+          <div>
+            Hero
+          </div>
+          <div>
+            Update date
+          </div>
+          <div>
+            Updated by
+          </div>
+        </mat-toolbar>
+        <section class="approval-category">
+          <mat-card *ngFor="let hero of heroApprovals | async" class="approval" routerLink="/admin/hero-approval/{{ hero.key }}">
+            <div class="content">
+              <a routerLink="/admin/hero-approval/{{ hero.key }}">{{ hero.payload.val().title }}</a>
+              <div class="date">
+                {{ hero.payload.val().dateUpdated | date }}
+              </div>
+              <div class="updated-by">
+                {{ (users | async | getUser: hero.payload.val().updatedBy)?.email }}
+              </div>
+              <div class="actions">
+                <button
+                  mat-raised-button
+                  (click)="approveItem($event, 'heroes', hero.payload.val(), hero.key)"
+                  *ngIf="(currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin')">
+                  Approve
+                </button>
+                <button
+                  mat-raised-button
+                  (click)="deleteItem($event, 'heroes', hero.key)"
+                  *ngIf="(currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin') || hero.payload.val().updatedBy === currentAdmin.uid">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </mat-card>
+        </section>
+      
+        <mat-toolbar class="highlight" *ngIf="(categoryApprovals | async)?.length > 0">
+          <div>
+            Category
+          </div>
+          <div>
+            Update date
+          </div>
+          <div>
+            Updated by
+          </div>
+        </mat-toolbar>
+        <section class="approval-category">
+          <mat-card *ngFor="let category of categoryApprovals | async" class="approval" routerLink="/admin/category-approval/{{ category.key }}">
+            <div class="content">
+              <a routerLink="/admin/category-approval/{{ category.key }}">{{ category.payload.val().name }}</a>
+              <div class="date">
+                {{ category.payload.val().dateUpdated | date }}
+              </div>
+              <div class="updated-by">
+                {{ (users | async | getUser: category.payload.val().updatedBy)?.email }}
+              </div>
+              <div class="actions">
+                <button
+                  mat-raised-button
+                  (click)="approveItem($event, 'categories', category.payload.val(), category.key)"
+                  *ngIf="(currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin')">
+                  Approve
+                </button>
+                <button
+                  mat-raised-button
+                  (click)="deleteItem($event, 'categories', category.key)"
+                  *ngIf="(currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin') || category.payload.val().updatedBy === currentAdmin.uid">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </mat-card>
+        </section>
+      
+        <mat-toolbar class="highlight" *ngIf="(pageApprovals | async)?.length > 0">
+          <div>
+            Page
+          </div>
+          <div>
+            Update date
+          </div>
+          <div>
+            Updated by
+          </div>
+        </mat-toolbar>
+        <section class="approval-category">
+          <mat-card *ngFor="let page of pageApprovals | async" class="approval" routerLink="/admin/page-approval/{{ page.key }}">
+            <div class="content">
+              <a routerLink="/admin/page-approval/{{ page.key }}">{{ page.payload.val().title }}</a>
+              <div class="date">
+                {{ page.payload.val().dateUpdated | date }}
+              </div>
+              <div class="updated-by">
+                {{ (users | async | getUser: page.payload.val().updatedBy)?.email }}
+              </div>
+              <div class="actions">
+                <button
+                  mat-raised-button
+                  (click)="approveItem($event, 'pages', page.payload.val(), page.key)"
+                  *ngIf="(currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin')">
+                  Approve
+                </button>
+                <button
+                  mat-raised-button
+                  (click)="deleteItem($event, 'pages', page.key)"
+                  *ngIf="(currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin') || page.payload.val().updatedBy === currentAdmin.uid">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </mat-card>
+        </section>
+      
+        <mat-toolbar class="highlight" *ngIf="(postApprovals | async)?.length > 0">
+          <div>
+            Post
+          </div>
+          <div>
+            Update date
+          </div>
+          <div>
+            Updated by
+          </div>
+        </mat-toolbar>
+        <section class="approval-category">
+          <mat-card *ngFor="let post of postApprovals | async" class="approval" routerLink="/admin/post-approval/{{ post.key }}">
+            <div class="content">
+              <a routerLink="/admin/post-approval/{{ post.key }}">{{ post.payload.val().title }}</a>
+              <div class="date">
+                {{ post.payload.val().dateUpdated | date }}
+              </div>
+              <div class="updated-by">
+                {{ (users | async | getUser: post.payload.val().updatedBy)?.email }}
+              </div>
+              <div class="actions">
+                <button
+                  mat-raised-button
+                  (click)="approveItem($event, 'posts', post.payload.val(), post.key)"
+                  *ngIf="(currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin')">
+                  Approve
+                </button>
+                <button
+                  mat-raised-button
+                  (click)="deleteItem($event, 'posts', post.key)"
+                  *ngIf="(currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin') || post.payload.val().updatedBy === currentAdmin.uid">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </mat-card>
+        </section>
+      </div>

@@ -28,6 +28,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { AdminApproveDialogComponent } from './components/admin-approve-dialog/admin-approve-dialog.component';
 import { AdminDeleteDialogComponent } from './components/admin-delete-dialog/admin-delete-dialog.component';
 import { SharedModule } from '../shared/shared.module';
+import { AdminApprovalsComponent } from './components/admin-approvals/admin-approvals.component';
 
 
 
@@ -52,7 +53,8 @@ import { SharedModule } from '../shared/shared.module';
             AdminThemeComponent,
             AdminComponent,
             AdminApproveDialogComponent,
-            AdminDeleteDialogComponent
+            AdminDeleteDialogComponent,
+            AdminApprovalsComponent
   ],
   imports: [
     CommonModule,
