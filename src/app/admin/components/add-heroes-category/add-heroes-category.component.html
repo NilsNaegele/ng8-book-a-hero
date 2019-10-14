@@ -1,1 +1,64 @@
-<p>add-heroes-category works!</p>
+<div class="category-form">
+        <h2>
+            <span *ngIf="!editMode">Add a</span>
+            <span *ngIf="editMode">Edit</span>
+            Category
+        </h2>
+    
+        <mat-toolbar class="highlight small" *ngIf="awaitingApproval" routerLink="/admin/approvals">
+            This product has a change awaiting moderation
+            <div class="action">
+                View Approvals
+            </div>
+        </mat-toolbar>
+    
+        <mat-form-field class="block">
+            <input matInput placeholder="Category name" type="text" [(ngModel)]="newName">
+        </mat-form-field>
+    
+        <mat-form-field>
+            <input matInput placeholder="Category weight" type="number" [(ngModel)]="newWeight">
+        </mat-form-field>
+    
+        <button
+            mat-raised-button
+            (click)="approveItem(newName, newWeight)"
+            class="submit"
+            *ngIf="router.url.includes('approval') && (currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin')">
+            <span>Approve</span>
+        </button>
+    
+        <button
+            mat-raised-button
+            (click)="submitForModeration(newName, newWeight)"
+            class="submit"
+            *ngIf="router.url.includes('approval') && entityObject && ((currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin') || currentAdmin.uid === entityObject.updatedBy)">
+            Save Draft
+        </button>
+    
+        <button
+            mat-raised-button
+            (click)="deleteItem($event)"
+            class="submit"
+            *ngIf="router.url.includes('approval') && entityObject && ((currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin') || currentAdmin.uid === entityObject.updatedBy)">
+            Delete Draft
+        </button>
+    
+        <button
+            mat-raised-button
+            (click)="submitForModeration(newName, newWeight)"
+            class="submit"
+            *ngIf="!router.url.includes('approval')">
+            <span>Submit for Moderation</span>
+        </button>
+    
+        <button
+            mat-raised-button
+            (click)="addCategory(newName, newWeight)"
+            class="submit"
+            *ngIf="!router.url.includes('approval') && (currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin')">
+            <span *ngIf="!editMode">Add</span>
+            <span *ngIf="editMode">Save</span>
+            Category
+        </button>
+    </div>
