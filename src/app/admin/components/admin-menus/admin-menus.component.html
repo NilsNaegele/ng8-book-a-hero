@@ -1,1 +1,24 @@
-<p>admin-menus works!</p>
+<div class="container">
+        <h2>Menus</h2>
+      
+        <mat-toolbar class="highlight">Primary Nav</mat-toolbar>
+        <p *ngIf="menuList.length === 0" class="center">
+            No menu items yet
+        </p>
+        <div dnd-sortable-container [sortableData]="menuList">
+          <mat-card *ngFor="let item of menuList; let i = index" dnd-sortable [sortableIndex]="i">
+            <mat-form-field>
+              <input mdInput placeholder="Item Label" [(ngModel)]="item.label" required>
+            </mat-form-field>
+            <mat-form-field>
+              <input mdInput placeholder="Item URL" [(ngModel)]="item.url" required>
+            </mat-form-field>
+            <div class="actions">
+              <button mat-raised-button (click)="deleteMenuItem(i)">Delete Menu Item</button>
+            </div>
+            <mat-icon>drag_handle</mat-icon>
+          </mat-card>
+        </div>
+        <button mat-raised-button (click)="addMenuItem()" class="button-add-menu">Add Menu Item</button>
+        <button mat-raised-button (click)="saveMenu()" class="button-add-menu">Save Menu</button>
+      </div>
