@@ -1,1 +1,71 @@
-<p>admin-dashboard works!</p>
+<div class="container">
+        <h2>Admin Dashboard</h2>
+    
+        <mat-grid-list cols="{{columns}}" rowHeight="230px" (window:resize)="onResize($event)">
+            <mat-grid-tile colspan="1" rowspan="1">
+              <mat-card routerLink="/admin/posts">
+                <mat-icon>class</mat-icon>
+                <h4 *ngIf="posts | async">{{ (posts | async)?.length }} Post<span *ngIf="(posts | async)?.length !== 1">s</span></h4>
+                <button mat-raised-button routerLink="/admin/add-post">Add a Post</button>
+              </mat-card>
+            </mat-grid-tile>
+    
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-card routerLink="/admin/pages">
+                    <mat-icon>description</mat-icon>
+                    <h4 *ngIf="pages | async">{{ (pages | async)?.length }} Page<span *ngIf="(pages | async)?.length !== 1">s</span></h4>
+                    <button mat-raised-button routerLink="/admin/add-page">Add a Page</button>
+                </mat-card>
+            </mat-grid-tile>
+    
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-card routerLink="/admin/products">
+                    <mat-icon>shopping_basket</mat-icon>
+                    <h4 *ngIf="products | async">{{ (products | async)?.length }} Product<span *ngIf="(products | async)?.length !== 1">s</span></h4>
+                    <button mat-raised-button routerLink="/admin/add-product">Add a Product</button>
+                </mat-card>
+            </mat-grid-tile>
+    
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-card routerLink="/admin/product-categories">
+                    <mat-icon>group_work</mat-icon>
+                    <h4 *ngIf="categories | async">{{ (categories | async)?.length }} Product Categorie<span *ngIf="(categories | async)?.length !== 1">s</span></h4>
+                    <button mat-raised-button routerLink="/admin/add-product-category">Add a Category</button>
+                </mat-card>
+            </mat-grid-tile>
+    
+            <mat-grid-tile colspan="1" rowspan="1">
+                <mat-card routerLink="/admin/approvals">
+                    <mat-icon>check_circle</mat-icon>
+                    <h4 *ngIf="approvals | async">{{ approvalsTotal }} item<span *ngIf="approvalsTotal !== 1">s</span> need<span *ngIf="approvalsTotal === 1">s</span> moderation</h4>
+                    <h4 *ngIf="(approvals | async) === (false || null || undefined)">0 items need moderation</h4>
+                    <button mat-raised-button routerLink="/admin/add-customer">View Approvals</button>
+                </mat-card>
+            </mat-grid-tile>
+    
+            <mat-grid-tile colspan="1" rowspan="1" *ngIf="currentAdmin && (currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin')">
+                <mat-card routerLink="/admin/customers">
+                    <mat-icon>account_circle</mat-icon>
+                    <h4 *ngIf="customers | async">{{ (customers | async)?.length }} Customer<span *ngIf="(customers | async)?.length !== 1">s</span></h4>
+                    <button mat-raised-button routerLink="/admin/add-customer">Add a Customer</button>
+                </mat-card>
+            </mat-grid-tile>
+    
+            <mat-grid-tile colspan="1" rowspan="1" *ngIf="currentAdmin && (currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin')">
+                <mat-card routerLink="/admin/orders">
+                    <mat-icon>attach_money</mat-icon>
+                    <h4 *ngIf="orders | async">{{ (orders | async)?.length }} Order<span *ngIf="(orders | async)?.length !== 1">s</span></h4>
+                    <button mat-raised-button routerLink="/admin/add-order">Add an Order</button>
+                </mat-card>
+            </mat-grid-tile>
+    
+            <mat-grid-tile colspan="1" rowspan="1" *ngIf="currentAdmin && currentAdmin.role === 'super-admin'">
+                <mat-card routerLink="/admin/admins">
+                    <mat-icon>assignment_ind</mat-icon>
+                    <h4 *ngIf="admins | async">{{ (admins | async)?.length }} Admin<span *ngIf="(admins | async)?.length !== 1">s</span></h4>
+                    <button mat-raised-button routerLink="/admin/add-admin">Add an Admin</button>
+                </mat-card>
+            </mat-grid-tile>
+    
+          </mat-grid-list>
+    </div>
