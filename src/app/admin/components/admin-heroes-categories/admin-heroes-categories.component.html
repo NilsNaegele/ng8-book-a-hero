@@ -1,1 +1,29 @@
-<p>admin-heroes-categories works!</p>
+<div class="container">
+        <div class="button-container">
+            <h2>Heroes Categories</h2>
+            <button mat-raised-button routerLink="/admin/add-heroes-category">Add a Category</button>
+        </div>
+        <p *ngIf="(categories | async)?.length === 0" class="center">
+            No categories yet
+        </p>
+        <mat-card class="category" *ngFor="let category of categories | async" routerLink="/admin/edit-heroes-category/{{ category.key }}">
+            <div class="content">
+                <h3>
+                    <a routerLink="/category/{{ category.payload.val().slug }}" target="_blank" stop-propagation>
+                        {{category.payload.val().name}}
+                    </a>
+                </h3>
+            </div>
+            <div class="publish">
+                <div class="edit">
+                    <button mat-raised-button routerLink="/admin/edit-heroes-category/{{ category.key }}">
+                        Edit
+                    </button>
+                    <button mat-raised-button (click)="deleteCategory(category)" 
+                    *ngIf="(currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin')">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </mat-card>
+    </div>

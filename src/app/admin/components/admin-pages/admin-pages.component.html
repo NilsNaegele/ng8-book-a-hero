@@ -1,1 +1,30 @@
-<p>admin-pages works!</p>
+<div class="container">
+        <div class="button-container">
+            <h2>Pages</h2>
+            <button mat-raised-button routerLink="/admin/add-page">Add a Page</button>
+        </div>
+        <p *ngIf="(pages | async)?.length === 0" class="center">
+            No pages yet
+        </p>
+        <mat-card class="page" *ngFor="let page of pages | async | sort:['title']" routerLink="/admin/edit-page/{{ page.key }}">
+            <div class="content">
+                <h3><a routerLink="/page/{{page.payload.val().url}}" target="_blank" stop-propagation>{{page.payload.val().title}}</a></h3>
+            </div>
+            <div class="publish">
+                <mat-slide-toggle ngDefaultControl (change)="onChange($event, page.key)" [(ngModel)]="page.payload.val().published" 
+                *ngIf="(currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin')">
+                    <span *ngIf="!page.payload.val().published">Publish</span>
+                    <span *ngIf="page.payload.val().published">Un-Publish</span>
+                </mat-slide-toggle>
+                <div class="edit">
+                    <button mat-raised-button routerLink="/admin/edit-page/{{ page.key }}">
+                        Edit
+                    </button>
+                    <button mat-raised-button (click)="deletePage(page.key)" *ngIf="(currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin')">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+    
