@@ -1,1 +1,3 @@
-<p>admin-delete-dialog works!</p>
+<h2>Are you sure?</h2>
+<button mat-raised-button class="bw" (click)="dialogRef.close('cancel')">Cancel</button>
+<button mat-raised-button (click)="dialogRef.close('delete')">Delete</button>
