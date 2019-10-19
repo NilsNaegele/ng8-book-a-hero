@@ -13,7 +13,7 @@ import { AdminDeleteDialogComponent } from '../admin-delete-dialog/admin-delete-
 })
 export class AdminClientsComponent {
 
-  customers: Observable<any[]>;
+  clients: Observable<any[]>;
   selectedOption: any;
   dialogRef: MatDialogRef<any>;
   currentAdmin: any;
@@ -24,14 +24,14 @@ export class AdminClientsComponent {
     public snackBar: MatSnackBar,
     public globalService: GlobalService
   ) {
-    this.customers = db.list('/users').snapshotChanges();
+    this.clients = db.list('/users').snapshotChanges();
 
     this.globalService.admin.subscribe((a) => {
       this.currentAdmin = a;
     });
   }
 
-  deleteCustomer(event, key: string) {
+  deleteClient(event, key: string) {
     event.stopPropagation();
     const dialogRef = this.dialog.open(AdminDeleteDialogComponent);
     dialogRef.afterClosed().subscribe(result => {

@@ -16,7 +16,7 @@
                 </a>
             </div>
             <div class="active">
-                <span class="block">{{client.payload.val().orders | objectCount}} order<span *ngIf="(client.payload.val().orders | objectCount) !== 1">s</span></span>
+                <span class="block">{{client.payload.val().orders | objectCounter}} order<span *ngIf="(client.payload.val().orders | objectCounter) !== 1">s</span></span>
                 <button mat-raised-button routerLink="/admin/edit-client/{{client.payload.val().uid}}">
                     Edit
                 </button>
