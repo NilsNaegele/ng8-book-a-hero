@@ -20,10 +20,10 @@ import { AddHeroesCategoryComponent } from './components/add-heroes-category/add
 import { AdminClientsComponent } from './components/admin-clients/admin-clients.component';
 import { AdminHeroesCategoriesComponent } from './components/admin-heroes-categories/admin-heroes-categories.component';
 import { AdminHeroesComponent } from './components/admin-heroes/admin-heroes.component';
-import { OrderComponent } from './herofront/components/order/order.component';
 import { AuthGuard } from '../services/auth-guard.service';
 import { AdminGuard } from '../services/admin-guard.service';
 import { SuperAdminGuard } from '../services/super-admin-guard.service';
+import { OrderComponent } from '../herofront/components/order/order.component';
 
 
 const adminRoutes: Routes = [

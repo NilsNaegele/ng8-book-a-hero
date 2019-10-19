@@ -17,6 +17,7 @@ import { HeroesComponent } from './herofront/components/heroes/heroes.component'
 import { HeroesCategoriesComponent } from './herofront/components/heroes-categories/heroes-categories.component';
 import { HeroesCategoryComponent } from './herofront/components/heroes-category/heroes-category.component';
 import { SharedModule } from './shared/shared.module';
+import { OrderComponent } from './herofront/components/order/order.component';
 
 firebase.initializeApp(environment.firebase);
 
@@ -25,7 +26,8 @@ firebase.initializeApp(environment.firebase);
     AppComponent,
     HeroesComponent,
     HeroesCategoriesComponent,
-    HeroesCategoryComponent
+    HeroesCategoryComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
