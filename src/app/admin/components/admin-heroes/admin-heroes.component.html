@@ -1,1 +1,31 @@
-<p>admin-heroes works!</p>
+<div class="container">
+        <div class="button-container">
+            <h2>Products</h2>
+            <button mat-raised-button routerLink="/admin/add-hero">Add a Hero</button>
+        </div>
+        <p *ngIf="(heroes | async)?.length === 0" class="center">
+            No heroes yet
+        </p>
+        <mat-card class="hero" *ngFor="let hero of heroes | async" routerLink="/admin/edit-hero/{{ hero.key }}">
+            <div class="content">
+                <h3><a routerLink="/hero/{{hero.payload.val().url}}" target="_blank" stop-propagation>{{hero.payload.val().title}}</a></h3>
+                <div class="date">{{hero.payload.val().price | currency:'USD':true }}</div>
+            </div>
+            <div class="publish">
+                <mat-slide-toggle ngDefaultControl (change)="onChange($event, hero.key)" 
+                [(ngModel)]="hero.payload.val().published" *ngIf="(currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin')">
+                    <span *ngIf="!hero.payload.val().published">Publish</span>
+                    <span *ngIf="hero.payload.val().published">Un-Publish</span>
+                </mat-slide-toggle>
+                <div class="edit">
+                    <button mat-raised-button routerLink="/admin/edit-hero/{{ hero.key }}">
+                        Edit
+                    </button>
+                    <button mat-raised-button (click)="deleteHero(hero)" 
+                    *ngIf="(currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin')">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </mat-card>
+    </div>
