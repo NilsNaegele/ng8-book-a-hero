@@ -1,1 +1,9 @@
-<p>admin-theme works!</p>
+<div class="container">
+        <h2>Theme</h2>
+      
+        <mat-form-field>
+          <input matInput placeholder="Site Name" [(ngModel)]="siteName" required>
+        </mat-form-field>
+      
+        <button mat-raised-button (click)="saveTheme(siteName)">Save Theme</button>
+      </div>
