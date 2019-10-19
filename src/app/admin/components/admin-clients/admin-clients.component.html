@@ -1,1 +1,28 @@
-<p>admin-clients works!</p>
+<div class="container">
+        <div class="button-container">
+            <h2>Clients</h2>
+            <button mat-raised-button routerLink="/admin/add-client">Add a Client</button>
+        </div>
+        <p *ngIf="(clients | async)?.length === 0" class="center">
+            No clients yet
+        </p>
+        <mat-card routerLink="/admin/client/{{ client.key }}" class="client" *ngFor="let client of clients | async">
+            <div class="content">
+                <a routerLink="/admin/client/{{ client.key }}">
+                    <img src="{{ client.payload.val().photoURL }}" class="client-photo" *ngIf="client.payload.val().photoURL">
+                    <img src="../../assets/placeholder.jpg" class="client-photo" *ngIf="!client.payload.val().photoURL">
+                    <span *ngIf="client.payload.val().email">{{client.payload.val().email}}</span>
+                    <span *ngIf="!client.payload.val().email">Guest Client</span>
+                </a>
+            </div>
+            <div class="active">
+                <span class="block">{{client.payload.val().orders | objectCount}} order<span *ngIf="(client.payload.val().orders | objectCount) !== 1">s</span></span>
+                <button mat-raised-button routerLink="/admin/edit-client/{{client.payload.val().uid}}">
+                    Edit
+                </button>
+                <button mat-raised-button (click)="deleteClient($event, client.key)" *ngIf="(currentAdmin.role === 'super-admin' || currentAdmin.role === 'admin')">
+                    Delete
+                </button>
+            </div>
+        </mat-card>
+    </div>
