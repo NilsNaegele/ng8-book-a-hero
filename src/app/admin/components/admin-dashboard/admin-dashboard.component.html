@@ -19,18 +19,18 @@
             </mat-grid-tile>
     
             <mat-grid-tile colspan="1" rowspan="1">
-                <mat-card routerLink="/admin/products">
+                <mat-card routerLink="/admin/heroes">
                     <mat-icon>shopping_basket</mat-icon>
-                    <h4 *ngIf="products | async">{{ (products | async)?.length }} Product<span *ngIf="(products | async)?.length !== 1">s</span></h4>
-                    <button mat-raised-button routerLink="/admin/add-product">Add a Product</button>
+                    <h4 *ngIf="heroes | async">{{ (heroes | async)?.length }} Hero<span *ngIf="(heroes | async)?.length !== 1">s</span></h4>
+                    <button mat-raised-button routerLink="/admin/add-hero">Add a Hero</button>
                 </mat-card>
             </mat-grid-tile>
     
             <mat-grid-tile colspan="1" rowspan="1">
-                <mat-card routerLink="/admin/product-categories">
+                <mat-card routerLink="/admin/hero-categories">
                     <mat-icon>group_work</mat-icon>
-                    <h4 *ngIf="categories | async">{{ (categories | async)?.length }} Product Categorie<span *ngIf="(categories | async)?.length !== 1">s</span></h4>
-                    <button mat-raised-button routerLink="/admin/add-product-category">Add a Category</button>
+                    <h4 *ngIf="categories | async">{{ (categories | async)?.length }} Hero Categorie<span *ngIf="(categories | async)?.length !== 1">s</span></h4>
+                    <button mat-raised-button routerLink="/admin/add-hero-category">Add a Category</button>
                 </mat-card>
             </mat-grid-tile>
     

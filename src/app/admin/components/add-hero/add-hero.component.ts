@@ -29,12 +29,12 @@ export class AddHeroComponent implements OnInit {
   newWeight: number;
   currentAdmin: any;
   editMode: boolean;
-  productKey: string;
+  heroKey: string;
   storageRef: any;
   file: any;
   imageUrl: any;
-  currentProduct: AngularFireObject<any>;
-  currentModeratedProducts: AngularFireList<any>;
+  currentHero: AngularFireObject<any>;
+  currentModeratedHeroes: AngularFireList<any>;
   entityObject: any;
   dialogRef: MatDialogRef<any>;
   selectedOption: string;
@@ -57,8 +57,8 @@ export class AddHeroComponent implements OnInit {
     this.globalService.admin.subscribe(admin => {
       this.currentAdmin = admin;
 
-      const adminApprovalProducts = this.db.list('/approvals/heroes/', ref => ref.orderByChild('updatedBy').equalTo(this.currentAdmin.uid));
-      adminApprovalProducts.valueChanges().subscribe(response => {
+      const adminApprovalHeroes = this.db.list('/approvals/heroes/', ref => ref.orderByChild('updatedBy').equalTo(this.currentAdmin.uid));
+      adminApprovalHeroes.valueChanges().subscribe(response => {
         console.log(!response);
       });
     });
@@ -70,20 +70,20 @@ export class AddHeroComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
         if (params && params.key) {
           this.editMode = true;
-          this.productKey = params.key;
+          this.heroKey = params.key;
 
           if (this.router.url.includes('approval')) {
-            this.currentProduct = this.db.object('/approvals/heroes/' + params.key);
+            this.currentHero = this.db.object('/approvals/heroes/' + params.key);
             this.db.object('/approvals/heroes/' + params.key).valueChanges().pipe(take(1)).subscribe((p: any) => {
               if (p.category) {
                 this.ogCategory = p.category;
               }
             });
-            this.db.object('/approvals/heroes/' + this.productKey).valueChanges().subscribe((approvalProduct: any) => {
-              this.entityObject = approvalProduct;
+            this.db.object('/approvals/heroes/' + this.heroKey).valueChanges().subscribe((approvalHero: any) => {
+              this.entityObject = approvalHero;
             });
           } else {
-            this.currentProduct = this.db.object('/heroes/' + params.key);
+            this.currentHero = this.db.object('/heroes/' + params.key);
             this.db.object('/heroes/' + params.key).valueChanges().pipe(take(1)).subscribe((p: any) => {
               if (p.category) {
                 this.ogCategory = p.category;
@@ -99,7 +99,7 @@ export class AddHeroComponent implements OnInit {
             });
           }
 
-          this.currentProduct.valueChanges().subscribe((p: any) => {
+          this.currentHero.valueChanges().subscribe((p: any) => {
             this.newTitle = p.title;
             this.newDescription = p.description;
             this.newPrice = p.price;
@@ -201,7 +201,7 @@ export class AddHeroComponent implements OnInit {
 
     if (newTitle && newPrice && newDescription && this.currentAdmin.uid) {
 
-      const productObject = {
+      const heroObject = {
         url: this.globalService.slugify(newTitle),
         dateUpdated: Date.now().toString(),
         rdateUpdated: (Date.now() * -1).toString(),
@@ -213,16 +213,16 @@ export class AddHeroComponent implements OnInit {
         updatedBy: this.currentAdmin.uid,
         weight: newWeight,
         category: newCategory ? newCategory : null,
-        entityKey: this.editMode && this.productKey ? this.productKey : null
+        entityKey: this.editMode && this.heroKey ? this.heroKey : null
       };
 
 
-      if (this.editMode && this.productKey) {
-        this.currentProduct = this.db.object('/heroes/' + this.productKey);
-        this.currentProduct.update(productObject);
-        this.updateCategory(this.ogCategory, this.newCategory, this.productKey);
+      if (this.editMode && this.heroKey) {
+        this.currentHero = this.db.object('/heroes/' + this.heroKey);
+        this.currentHero.update(heroObject);
+        this.updateCategory(this.ogCategory, this.newCategory, this.heroKey);
       } else {
-        this.heroes.push(productObject).then((item) => {
+        this.heroes.push(heroObject).then((item) => {
           if (this.newCategory) {
             this.db.object('/heroes/' + item.key + '/entityKey').set(item.key);
             this.db.object('/categories/' + this.newCategory + '/heroes/' + item.key).set(Date.now().toString());
@@ -247,7 +247,7 @@ export class AddHeroComponent implements OnInit {
     if (newTitle && newPrice && newDescription && this.currentAdmin.uid) {
 
       const approvalObject = {
-        entityKey: this.router.url.includes('approval') ? this.entityObject.entityKey : this.productKey,
+        entityKey: this.router.url.includes('approval') ? this.entityObject.entityKey : this.heroKey,
         url: this.globalService.slugify(newTitle),
         dateUpdated: Date.now().toString(),
         rdateUpdated: (Date.now() * -1).toString(),
@@ -261,13 +261,13 @@ export class AddHeroComponent implements OnInit {
         category: newCategory ? newCategory : null
       };
 
-      if (this.editMode && this.productKey) {
+      if (this.editMode && this.heroKey) {
 
-        this.currentModeratedProducts = this.db.list('/approvals/heroes/');
+        this.currentModeratedHeroes = this.db.list('/approvals/heroes/');
 
         // tslint:disable-next-line: max-line-length
-        const adminApprovalProducts = this.db.list('/approvals/heroes/', ref => ref.orderByChild('updatedBy').equalTo(this.currentAdmin.uid)).valueChanges();
-        adminApprovalProducts.pipe(take(1)).subscribe((approvals: any) => {
+        const adminApprovalHeroes = this.db.list('/approvals/heroes/', ref => ref.orderByChild('updatedBy').equalTo(this.currentAdmin.uid)).valueChanges();
+        adminApprovalHeroes.pipe(take(1)).subscribe((approvals: any) => {
 
           let matchingApprovals = [];
           if (this.router.url.includes('approval')) {
@@ -276,14 +276,14 @@ export class AddHeroComponent implements OnInit {
             });
           } else {
             matchingApprovals = approvals.filter((match) => {
-              return match.entityKey === this.productKey;
+              return match.entityKey === this.heroKey;
             });
           }
 
           if (matchingApprovals.length === 0 || !this.router.url.includes('approval')) {
-            this.currentModeratedProducts.push(approvalObject);
+            this.currentModeratedHeroes.push(approvalObject);
           } else {
-            this.db.object('/approvals/heroes/' + this.productKey).update(approvalObject);
+            this.db.object('/approvals/heroes/' + this.heroKey).update(approvalObject);
           }
         });
       } else {
@@ -315,7 +315,7 @@ export class AddHeroComponent implements OnInit {
       });
     }
 
-    this.db.object('/approvals/heroes/' + this.productKey).remove();
+    this.db.object('/approvals/heroes/' + this.heroKey).remove();
     const snackBarRef = this.snackBar.open('Hero approved', 'OK!', {
       duration: 3000
     });
@@ -328,7 +328,7 @@ export class AddHeroComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.selectedOption = result;
       if (this.selectedOption === 'delete') {
-        this.db.object('/approvals/heroes/' + this.productKey).remove();
+        this.db.object('/approvals/heroes/' + this.heroKey).remove();
         const snackBarRef = this.snackBar.open('Draft deleted', 'OK!', {
           duration: 3000
         });

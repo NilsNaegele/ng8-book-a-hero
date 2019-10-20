@@ -1,19 +1,19 @@
 <div class="container" [ngClass]="{ 'category': router.url.includes('category'), 'categories': !router.url.includes('category') }">
     <h3><a routerLink="/category/{{ categoryObject.slug }}">{{ categoryObject.name }}</a></h3>
-    <section class="grid" *ngIf="categoryProducts">
-      <span class="grid-tile" *ngFor="let product of categoryProducts">
-        <div *ngIf="product.published" itemscope itemtype="http://schema.org/Product">
-          <mat-card routerLink="/product/{{ product.url }}" class="product">
-            <img [src]="getProductImage(product)" itemprop="image" alt="{{product.title}}">
-            <div class="product-content">
+    <section class="grid" *ngIf="categoryHeroes">
+      <span class="grid-tile" *ngFor="let hero of categoryHeroes">
+        <div *ngIf="hero.published">
+          <mat-card routerLink="/hero/{{ hero.url }}" class="hero">
+            <img [src]="getHeroImage(hero)" itemprop="image" alt="{{hero.title}}">
+            <div class="hero-content">
               <h3>
-                <a routerLink="/product/{{ product.url }}" itemprop="name">
-                  {{ product.title }}
+                <a routerLink="/hero/{{ hero.url }}" itemprop="name">
+                  {{ hero.title }}
                 </a>
               </h3>
               <meta itemprop="priceCurrency" content="USD" />
               <div class="price" itemprop="price">
-                {{ product.price | currency:'USD':true }}
+                {{ hero.price | currency:'USD':true }}
               </div>
             </div>
           </mat-card>
@@ -26,6 +26,6 @@
       </div>
     </section>
   </div>
-  <div *ngIf="(products | async) && router.url.includes('category')" class="bottom-cta">
+  <div *ngIf="(heroes | async) && router.url.includes('category')" class="bottom-cta">
     <button mat-button routerLink="/">View All Categories</button>
   </div>

@@ -69,8 +69,8 @@ export class AddHeroesCategoryComponent implements OnInit {
           this.currentCategory.subscribe(c => {
             this.newName = c.name;
             this.newWeight = c.weight;
-            if (c.products) {
-              this.newHeroes = c.products;
+            if (c.heroes) {
+              this.newHeroes = c.heroes;
             }
           });
         } else {
@@ -90,7 +90,7 @@ export class AddHeroesCategoryComponent implements OnInit {
         rdateUpdated: (Date.now() * -1).toString(),
         updatedBy: this.currentAdmin.uid,
         entityKey: this.editMode && this.categoryKey ? this.categoryKey : null,
-        products: this.newHeroes ? this.newHeroes : null
+        heroes: this.newHeroes ? this.newHeroes : null
       };
 
       if (this.editMode && this.categoryKey) {
@@ -120,7 +120,7 @@ export class AddHeroesCategoryComponent implements OnInit {
         dateUpdated: Date.now().toString(),
         rdateUpdated: (Date.now() * -1).toString(),
         updatedBy: this.currentAdmin.uid,
-        products: this.newHeroes ? this.newHeroes : null
+        heroes: this.newHeroes ? this.newHeroes : null
       };
 
       if (this.editMode && this.categoryKey) {
@@ -173,7 +173,7 @@ export class AddHeroesCategoryComponent implements OnInit {
     const snackBarRef = this.snackBar.open('Category approved', 'OK!', {
       duration: 3000
     });
-    this.router.navigateByUrl('admin/product-categories');
+    this.router.navigateByUrl('admin/hero-categories');
   }
 
   deleteItem(event) {
@@ -186,7 +186,7 @@ export class AddHeroesCategoryComponent implements OnInit {
         const snackBarRef = this.snackBar.open('Draft deleted', 'OK!', {
           duration: 3000
         });
-        this.router.navigateByUrl('admin/product-categories');
+        this.router.navigateByUrl('admin/hero-categories');
       }
     });
   }

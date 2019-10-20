@@ -13,7 +13,7 @@ export class AdminDashboardComponent implements OnInit {
   posts: Observable<any[]>;
   pages: Observable<any[]>;
   admins: Observable<any[]>;
-  products: Observable<any[]>;
+  heroes: Observable<any[]>;
   customers: Observable<any[]>;
   categories: Observable<any[]>;
   orders: Observable<any[]>;
@@ -27,7 +27,7 @@ export class AdminDashboardComponent implements OnInit {
     this.pages = db.list('/pages').valueChanges();
     this.admins = db.list('/admins').valueChanges();
     this.customers = db.list('/users').valueChanges();
-    this.products = db.list('/products').valueChanges();
+    this.heroes = db.list('/heroes').valueChanges();
     this.categories = db.list('/categories').valueChanges();
     this.orders = db.list('/orders').valueChanges();
     this.approvals = db.object('/approvals').valueChanges();
@@ -44,8 +44,8 @@ export class AdminDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.approvals.subscribe((a: any) => {
-      if (a && a.products) {
-        this.approvalsTotal += Object.keys(a.products).length;
+      if (a && a.heroes) {
+        this.approvalsTotal += Object.keys(a.heroes).length;
       }
       if (a && a.pages) {
         this.approvalsTotal += Object.keys(a.pages).length;

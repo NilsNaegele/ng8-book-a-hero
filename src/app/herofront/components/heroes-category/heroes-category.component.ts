@@ -11,12 +11,12 @@ import { Observable } from 'rxjs';
 })
 export class HeroesCategoryComponent implements OnInit {
 
-  products: Observable<any[]>;
+  heroes: Observable<any[]>;
   categories: Observable<any[]>;
   category: Observable<any[]>;
   categoryObject: any;
   categoryName: string;
-  categoryProducts: any;
+  categoryHeroes: any;
   @Input() categoryInput: any;
 
   constructor(
@@ -27,7 +27,7 @@ export class HeroesCategoryComponent implements OnInit {
     private meta: Meta
   ) {
     this.categories = db.list('/categories').valueChanges();
-    this.products = db.list('/products', ref => ref.orderByChild('published').equalTo(true)).valueChanges();
+    this.heroes = db.list('/heroes', ref => ref.orderByChild('published').equalTo(true)).valueChanges();
     this.categoryObject = {};
   }
 
@@ -36,9 +36,9 @@ export class HeroesCategoryComponent implements OnInit {
       this.category = this.categoryInput;
       this.categoryObject.slug = this.categoryInput.slug;
       this.categoryObject.name = this.categoryInput.name;
-      this.categoryObject.products = Object.keys(this.categoryInput.products);
-      this.products.subscribe((p: any) => {
-        this.categoryProducts = p.filter((item) => {
+      this.categoryObject.heroes = Object.keys(this.categoryInput.heroes);
+      this.heroes.subscribe((p: any) => {
+        this.categoryHeroes = p.filter((item) => {
           return item.category === this.categoryInput.entityKey;
         });
       });
@@ -49,23 +49,23 @@ export class HeroesCategoryComponent implements OnInit {
         this.category.subscribe((cat: any) => {
           this.categoryObject.slug = cat[0].slug;
           this.categoryObject.name = cat[0].name;
-          this.categoryObject.products = Object.keys(cat[0].products);
-          this.products.subscribe((p: any) => {
-            this.categoryProducts = p.filter((item: any) => {
+          this.categoryObject.heroes = Object.keys(cat[0].heroes);
+          this.heroes.subscribe((p: any) => {
+            this.categoryHeroes = p.filter((item: any) => {
               return item.category === cat[0].entityKey;
             });
           });
 
           this.title.setTitle(this.categoryObject.name);
-          this.meta.addTag({ name: 'description', content: 'View all products in the ' + this.categoryObject.name + ' category' });
+          this.meta.addTag({ name: 'description', content: 'View all heroes in the ' + this.categoryObject.name + ' category' });
         });
       });
     }
   }
 
-  getProductImage(product: any) {
-    if (product && product.thumbnail) {
-      return product.thumbnail;
+  getHeroImage(hero: any) {
+    if (hero && hero.thumbnail) {
+      return hero.thumbnail;
     } else {
       return '../../assets/placeholder.jpg';
     }
